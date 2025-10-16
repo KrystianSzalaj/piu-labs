@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Uwagi o Formularzach HTML</title>
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Uwagi o Formularzach HTML</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Strona główna</a></li>
+          <li><a href="about.html">O mnie</a></li>
+          <li><a href="contact.html">Kontakt</a></li>
+          <li><a href="uwagi.html" class="active">Uwagi o HTML</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <article>
+        <header>
+          <h2>Formularze HTML a ich Ograniczenia</h2>
+          <p>
+            Czyste formularze HTML (bez JS) stanowią fundament interakcji
+            użytkownika ze stroną, jednak mają swoje ograniczenia, które warto
+            zrozumieć.
+          </p>
+        </header>
+
+        <section>
+          <h3>Wady i Ograniczenia Czystego HTML</h3>
+          <ul>
+            <li>
+              <strong>Brak Walidacji Po Stronie Klienta (UX):</strong>
+              Atrybuty jak `required` czy `type="email"` są pomocne, ale
+              powiadomienia o błędach są surowe, trudne do ostylowania i
+              wyświetlane dopiero przy próbie wysłania formularza.
+            </li>
+            <li>
+              <strong>Brak Asynchroniczności:</strong> Wysyłka formularza
+              powoduje przeładowanie całej strony, co jest powolne i przerywa
+              doświadczenie użytkownika (UX).
+            </li>
+            <li>
+              <strong>Ograniczona Interaktywność:</strong> Nie można dynamicznie
+              zmieniać pól, np. ukrywać jednego pola, dopóki inne nie zostanie
+              zaznaczone, bez użycia JavaScriptu.
+            </li>
+            <li>
+              <strong>Zależność od Serwera:</strong> Każda walidacja
+              biznesowa musi być wykonana po stronie serwera, co zwiększa
+              obciążenie i opóźnienia.
+            </li>
+          </ul>
+        </section>
+        
+        <hr>
+
+        <section>
+          <h3>Kiedy Warto Stosować (Tylko HTML) ✅</h3>
+          <p>
+            Formularze HTML bez JavaScriptu są idealne, gdy:
+          </p>
+          <ol>
+            <li>
+              <strong>Wymagana jest Maksymalna Dostępność:</strong>
+              Działają zawsze, nawet gdy JS jest wyłączony lub zablokowany.
+              To podstawa zasady "Progressive Enhancement".
+            </li>
+            <li>
+              <strong>Proste Kontakty:</strong> Są to formularze z kilkoma
+              polami, których głównym celem jest wysłanie danych na serwer.
+            </li>
+            <li>
+              <strong>Minimalne Wymagania Sprzętowe:</strong> Idealne dla
+              starszych urządzeń lub wolnych połączeń, ponieważ kod jest lekki.
+            </li>
+            <li>
+              <strong>Bezpieczeństwo:</strong> Chociaż i tak musimy walidować
+              dane na serwerze, brak skomplikowanej logiki JS minimalizuje
+              powierzchnię ataku po stronie klienta.
+            </li>
+          </ol>
+        </section>
+
+        <section>
+          <h3>Kiedy Należy Ich Unikać ❌</h3>
+          <p>
+            Warto rozważyć dodanie JavaScriptu (lub użycie nowoczesnych
+            frameworków), gdy:
+          </p>
+          <ul>
+            <li>
+              <strong>Aplikacja Jednostronicowa (SPA):</strong> Formularze mają
+              wysyłać dane bez przeładowania strony (AJAX/Fetch API).
+            </li>
+            <li>
+              <strong>Zaawansowana Walidacja:</strong> Wymagana jest natychmiastowa,
+              złożona walidacja (np. sprawdzanie unikalności nazwy użytkownika
+              w czasie rzeczywistym).
+            </li>
+            <li>
+              <strong>Dynamiczne Zależności Pól:</strong> Pola formularza
+              zmieniają się lub pojawiają w zależności od wyboru użytkownika.
+            </li>
+          </ul>
+        </section>
+
+      </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Uwagi o Formularzach HTML. Wszystkie prawa zastrzeżone.</p>
+    </footer>
+  </body>
+</html>

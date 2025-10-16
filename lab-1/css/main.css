@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+:root {
+    --bg-dark: #2c3e50;         /* Ciemne tło strony */
+    --card-dark: #34495e;       /* Tło formularza/artykułu */
+    --accent-color: #3498db;    /* Akcent: Jasny Niebieski (dla przycisku/focusu) */
+    --link-color: #ffffff;      /* Kolor linków (Biały) */
+    --text-light: #ecf0f1;
+    --green-dark: #00a86b;      /* Ciemna zieleń nawigacji */
+}
+
+/* 1. Reset i Tło Strony */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+a { color: var(--link-color); text-decoration: none; transition: color 0.3s; }
+a:hover { color: var(--accent-color); }
+
+/* 2. Nagłówek i Twoja Zmodyfikowana Nawigacja */
+header {
+    background-color: var(--bg-dark);
+    padding: 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+}
+header h1 {
+    font-size: 1.8rem;
+    color: var(--link-color);
+    padding: 15px 30px 10px;
+    align-self: flex-start;
+}
+
+/* === Twoja Nawigacja (zielona, pełna szerokość) === */
+nav {
+  width: 100%;
+  background: linear-gradient(90deg, #00a86b, #2ecc71);
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 15px 0;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 0;
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+nav ul li a {
+    color: #f1f1f1;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease, transform 0.2s ease;
+    padding: 0.3rem 0.5rem;
+}
+nav ul li a:hover {
+  color: var(--link-color);
+  transform: scale(1.07);
+}
+nav ul li a.active {
+  color: var(--link-color);
+  border-bottom: 2px solid var(--link-color);
+}
+
+
+/* 3. Główna Zawartość i Karta Logowania */
+main {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    /* Usunięcie align-items: center; dla strony uwagi, by treść zaczynała się u góry */
+    padding: 40px 20px; /* Dodanie paddingu dla ogólnej zawartości */
+}
+/* Użycie tylko .login-form (klasa) dla strony logowania */
+.login-form {
+    background-color: var(--card-dark);
+    padding: 35px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+    width: 100%;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border-top: 4px solid var(--accent-color);
+}
+/* 4. Pola Formularza (tylko dla .login-form) */
+.login-form label { font-weight: 700; margin-top: 5px; }
+.login-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #7f8c8d;
+    border-radius: 5px;
+    background-color: #2c3e50;
+    color: var(--text-light);
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+.login-form input:focus {
+    border-color: var(--accent-color);
+    outline: none;
+    box-shadow: 0 0 5px var(--accent-color);
+}
+/* 5. Przycisk (tylko dla .login-form) */
+.login-form button[type="submit"] {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+.login-form button[type="submit"]:hover {
+    background-color: #2980b9;
+    transform: translateY(-1px);
+}
+
+/* ========================================= */
+/* === STYLe DLA STRONY INFORMACYJNEJ (uwagi.html) === */
+/* ========================================= */
+
+/* Stylowanie Semantyczne dla Artykułu Informacyjnego */
+article {
+    background-color: var(--card-dark);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+    width: 100%;
+    max-width: 900px;
+    border-top: 4px solid var(--accent-color);
+}
+
+article header h2 {
+    color: var(--accent-color);
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+article header p {
+    font-style: italic;
+    color: #bdc3c7;
+    margin-bottom: 30px;
+    border-bottom: 1px dashed #496075;
+    padding-bottom: 15px;
+}
+
+/* Sekcje */
+section {
+    margin-bottom: 30px;
+}
+
+section h3 {
+    color: var(--text-light);
+    font-size: 1.4rem;
+    border-left: 4px solid var(--green-dark); /* Akcent z zieleni nawigacji */
+    padding-left: 10px;
+    margin-bottom: 15px;
+}
+
+/* Listy */
+ul, ol {
+    margin-left: 20px;
+    padding-left: 0;
+}
+
+ul li, ol li {
+    margin-bottom: 10px;
+    line-height: 1.8;
+}
+
+ul li strong, ol li strong {
+    color: var(--accent-color);
+    font-weight: 700;
+}
+
+p {
+    margin-bottom: 15px;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background-color: #496075;
+    margin: 30px 0;
+}
+
+/* Stopka */
+footer {
+    background-color: #21303d;
+    color: #7f8c8d;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: auto;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+}

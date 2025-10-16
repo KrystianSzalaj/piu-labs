@@ -1,0 +1,133 @@
+/* Ustawienia podstawowe */
+html {
+  font-size: 16px;
+  font-family: system-ui, sans-serif;
+  color-scheme: light dark;
+}
+
+body {
+  background-color: #ffffff; /* zawsze białe tło strony */
+  color: #222;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem;
+  transition: color 0.3s;
+}
+
+/* Kontener formularza */
+.formularz {
+  background: #fff;
+  max-width: 500px;
+  width: 100%;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+h1 {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Ikona 🌗 */
+#theme-toggle {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+  transition: transform 0.3s;
+}
+#theme-toggle:hover {
+  transform: rotate(20deg);
+}
+
+/* Formularz */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+label {
+  font-weight: 600;
+  cursor: pointer;
+}
+
+input,
+select,
+button {
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.3s;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #4caf50;
+}
+
+/* Fieldset */
+fieldset {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 0.8rem;
+}
+legend {
+  font-weight: 600;
+}
+
+/* Checkbox i radio */
+input[type="radio"],
+input[type="checkbox"],
+input[type="color"] {
+  cursor: pointer;
+}
+
+/* Przycisk */
+button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.8rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* === Tryb ciemny (tylko formularz, tło strony pozostaje białe) === */
+body.dark {
+  color: #222; /* ciemny tekst nadal na białym tle */
+}
+
+body.dark .formularz {
+  background-color: #2c2c2c;
+  color: #f5f5f5;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+body.dark input,
+body.dark select,
+body.dark fieldset {
+  background-color: #3a3a3a;
+  color: #fff;
+  border: 1px solid #666;
+}
+
+body.dark button {
+  background-color: #2e7d32;
+}
+body.dark button:hover {
+  background-color: #1b5e20;
+}
