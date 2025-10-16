@@ -7,11 +7,15 @@
   <link rel="stylesheet" href="css/konkurs.css" />
 </head>
 <body>
+  <!-- ✅ Checkbox przed formularzem -->
+  <input type="checkbox" id="toggle-theme" hidden />
+
   <main>
     <section class="formularz">
       <h1>Zgłoszenie<br />do Konkursu Plastycznego</h1>
 
-      <div id="theme-toggle" title="Wybór kategorii">🌗</div>
+      <!-- 🌗 przełącznik -->
+      <label for="toggle-theme" id="theme-toggle" title="Wybór kategorii">🌗</label>
 
       <form action="https://httpbin.org/get" method="get">
         <label for="imie">Imię:</label>
@@ -59,20 +63,12 @@
 
         <label>
           <input type="checkbox" name="zgoda" required />
-          Zgadzam się na regulamin konkursu.
+          Oświadczam, że zapoznałem/am się z regulaminem konkursu.
         </label>
 
         <button type="submit">Wyślij zgłoszenie</button>
       </form>
     </section>
   </main>
-
-  <script>
-    // 🌗 Przełączanie trybu jasny/ciemny
-    const toggle = document.getElementById('theme-toggle');
-    toggle.addEventListener('click', () => {
-      document.body.classList.toggle('dark');
-    });
-  </script>
 </body>
 </html>
