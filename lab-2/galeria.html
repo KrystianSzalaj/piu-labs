@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsywna Galeria Zdjęć</title>
+    <style>
+        /* Import stylów CSS do pliku HTML */
+        /* Zwykle style umieszcza się w osobnym pliku style.css */
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 40px;
+        }
+
+        .gallery-container {
+            display: grid;
+            gap: 20px; /* Odstęp między elementami galerii */
+            padding: 0 10px;
+            max-width: 1600px; /* Ograniczenie maksymalnej szerokości galerii */
+            margin: 0 auto;
+        }
+
+        figure {
+            margin: 0; /* Usunięcie domyślnych marginesów figure */
+            padding: 0;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px; /* Zaokrąglone rogi */
+            overflow: hidden; /* Upewnienie się, że obrazek nie wychodzi poza rogi figure */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        figure:hover {
+            transform: translateY(-5px); /* Lekkie podniesienie */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 0 0 4px #007bff; /* Efekt po najechaniu: cień i ramka (niebieska) */
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 10px 10px 0 0; /* Zaokrąglone rogi tylko u góry dla obrazu */
+        }
+
+        figcaption {
+            padding: 15px;
+            text-align: center;
+            font-style: italic;
+            font-size: 0.9em;
+            color: #555;
+            border-top: 1px solid #eee;
+        }
+
+        /* ---------------------------------------------------------------------- */
+        /* RESPONSIVE LAYOUT I DOBÓR ZDJĘĆ - ZGODNIE Z TABELĄ */
+        /* ---------------------------------------------------------------------- */
+
+        /* Domyślnie - dla < 1200px (1 kolumna) */
+        .gallery-container {
+            grid-template-columns: 1fr; /* Jedna kolumna */
+        }
+        
+        /* -------------------------------------------------- */
+        /* 1. Dla okna >= 1200px (2 kolumny) */
+        /* -------------------------------------------------- */
+        @media (min-width: 1200px) {
+            .gallery-container {
+                grid-template-columns: repeat(2, 1fr); /* Dwie kolumny */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Moja Responsywna Galeria Zdjęć</h1>
+    
+    <div class="gallery-container">
+        
+        <figure>
+            <picture>
+                <source media="(min-width: 1600px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie1-1000.jpg">
+                <source media="(min-width: 1200px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie1-1000.jpg">
+                <source media="(min-width: 800px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie1-1000.jpg">
+                <img src="zdjecie1-500.jpg" alt="Majestatyczny widok górski" loading="lazy">
+            </picture>
+            <figcaption>1. Góry</figcaption>
+        </figure>
+
+        <figure>
+            <picture>
+                <source media="(min-width: 1600px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie2-1000.jpg">
+                <source media="(min-width: 1200px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie2-1000.jpg">
+                <source media="(min-width: 800px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie2-1000.jpg">
+                <img src="zdjecie2-500.jpg" alt="Stare miasto" loading="lazy">
+            </picture>
+            <figcaption>2. Uliczka</figcaption>
+        </figure>
+
+        <figure>
+            <picture>
+                <source media="(min-width: 1600px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie3-1000.jpg">
+                <source media="(min-width: 1200px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie3-1000.jpg">
+                <source media="(min-width: 800px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie3-1000.jpg">
+                <img src="zdjecie3-500.jpg" alt="Portret osoby w ciepłym świetle" loading="lazy">
+            </picture>
+            <figcaption>3. Portret</figcaption>
+        </figure>
+        
+        <figure>
+            <picture>
+                <source media="(min-width: 1600px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie4-1000.jpg">
+                <source media="(min-width: 1200px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie4-1000.jpg">
+                <source media="(min-width: 800px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie4-1000.jpg">
+                <img src="zdjecie4-500.jpg" alt="Kwiaty w pełnym rozkwicie na tle nieba" loading="lazy">
+            </picture>
+            <figcaption>4. kwiaty</figcaption>
+        </figure>
+        
+        <figure>
+            <picture>
+                <source media="(min-width: 1600px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie5-1000.jpg">
+                <source media="(min-width: 1200px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie5-1000.jpg">
+                <source media="(min-width: 800px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie5-1000.jpg">
+                <img src="zdjecie5-500.jpg" alt="Abstrakcyjny wzór w jaskrawych kolorach" loading="lazy">
+            </picture>
+            <figcaption>5.barwy</figcaption>
+        </figure>
+
+        <figure>
+            <picture>
+                <source media="(min-width: 1600px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie6-1000.jpg">
+                <source media="(min-width: 1200px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie6-1000.jpg">
+                <source media="(min-width: 800px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie6-1000.jpg">
+                <img src="zdjecie6-500.jpg" alt="Zachód słońca nad morzem" loading="lazy">
+            </picture>
+            <figcaption>6. plaża</figcaption>
+        </figure>
+
+        <figure>
+            <picture>
+                <source media="(min-width: 1600px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie7-1000.jpg">
+                <source media="(min-width: 1200px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie7-1000.jpg">
+                <source media="(min-width: 800px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie7-1000.jpg">
+                <img src="zdjecie7-500.jpg" alt="Zwierzę: Ciekawski kot" loading="lazy">
+            </picture>
+            <figcaption>7. Kot</figcaption>
+        </figure>
+        
+        <figure>
+            <picture>
+                <source media="(min-width: 1600px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie8-1000.jpg">
+                <source media="(min-width: 1200px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie8-1000.jpg">
+                <source media="(min-width: 800px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie8-1000.jpg">
+                <img src="zdjecie8-500.jpg" alt="Widok na nowoczesny drapacz chmur z lotu ptaka" loading="lazy">
+            </picture>
+            <figcaption>8. wiezowiec</figcaption>
+        </figure>
+
+        <figure>
+            <picture>
+                <source media="(min-width: 1600px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie9-1000.jpg">
+                <source media="(min-width: 1200px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie9-1000.jpg">
+                <source media="(min-width: 800px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie9-1000.jpg">
+                <img src="zdjecie9-500.jpg" alt="Jedzenie: Talerz kolorowych, świeżych warzyw" loading="lazy">
+            </picture>
+            <figcaption>9. uczta</figcaption>
+        </figure>
+
+        <figure>
+            <picture>
+                <source media="(min-width: 1600px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie10-1000.jpg">
+                <source media="(min-width: 1200px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie10-1000.jpg">
+                <source media="(min-width: 800px)" srcset="C:\Users\kryst\OneDrive\Pulpit\strona\piu-labs\lab-2\zdjecia\zdjecie10-1000.jpg">
+                <img src="zdjecie10-500.jpg" alt="Samochód retro zaparkowany przy starym kinie" loading="lazy">
+            </picture>
+            <figcaption>10. auto</figcaption>
+        </figure>
+        
+    </div>
+
+</body>
+</html>
