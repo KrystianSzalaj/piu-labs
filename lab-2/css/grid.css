@@ -1,0 +1,213 @@
+/* css/grid.css */
+
+/* Reset stylów */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+/* Ustawienia marginesów dla treści głównej i bocznej */
+main h1, main h2, main h3, main p,
+aside h1, aside h2, aside h3, aside p {
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+/* --- MOBILE FIRST: Układ podstawowy (do 1023px) --- */
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+        "header"
+        "main"
+        "aside"
+        "nav"
+        "footer";
+    gap: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* Przypisanie obszarów do elementów */
+header { grid-area: header; }
+nav { grid-area: nav; }
+main { grid-area: main; }
+aside { grid-area: aside; }
+footer { grid-area: footer; }
+
+
+/* --- Ogólne style elementów --- */
+
+/* Header */
+header {
+    display: flex;
+    align-items: center;
+    background-color: #f7922d; /* Pomarańczowy */
+    color: white;
+    padding: 10px;
+}
+.logo {
+    font-size: 2.2em;
+    margin-right: 15px;
+    padding: 5px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+header h1 {
+    font-size: 1.8em;
+    margin: 0;
+}
+
+/* Navigation (Menu) */
+nav {
+    background-color: #337ab7; /* Niebieski */
+    padding: 5px 10px;
+}
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+nav a:hover {
+    background-color: #286090; /* Ciemniejszy niebieski na hover */
+}
+
+/* Main Content */
+main {
+    padding: 20px;
+    background-color: white;
+}
+
+/* Aside (Panel boczny) */
+aside {
+    background-color: #eafaea; /* Jasnozielone tło */
+    padding: 20px;
+    border-top: 1px solid #d0d0d0; /* Lekka linia */
+}
+aside h3 {
+    margin-bottom: 1rem;
+    color: #333;
+}
+aside p {
+    color: #555;
+}
+
+/* Style dla listy emoji (MOBILE) - poprawione */
+aside div {
+    display: flex;
+    flex-wrap: wrap; /* Pozwala na zawijanie wierszy */
+    justify-content: center; /* Centruje emoji */
+    gap: 15px; /* Odstępy między emoji */
+    margin-top: 1.5rem;
+}
+aside div span {
+    /* Ustawiamy bardzo dużą czcionkę, aby emoji były duże */
+    font-size: 4em; /* Znacznie większe emoji dla mobile */
+    /* Upewniamy się, że mają stałe wymiary i są wyśrodkowane */
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Dodajemy tło i zaokrąglone rogi, aby przypominały obrazki */
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 15px; /* Bardziej zaokrąglone rogi */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); /* Wyraźniejszy cień */
+}
+
+
+/* Footer */
+footer {
+    background-color: #5cb85c;
+    color: white;
+    text-align: center;
+    padding: 12px;
+    font-size: 0.9em;
+}
+
+
+/* ------------------------------------------- */
+/* --- WERSJA SZEROKA (@media min-width: 1024px) --- */
+/* ------------------------------------------- */
+@media (min-width: 1024px) {
+
+    .container {
+        max-width: 1200px;
+        margin: 20px auto;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    /* Układ Grid dla wersji szerokiej */
+    .container {
+        grid-template-columns: 1fr 300px;
+        grid-template-areas:
+            "header header"
+            "nav nav"
+            "main aside"
+            "footer footer";
+        gap: 0;
+    }
+
+    /* Modyfikacja Header dla wersji szerokiej */
+    header {
+        padding: 15px 25px;
+    }
+
+    /* Modyfikacja Navigation (Menu) dla wersji szerokiej */
+    nav {
+        display: flex;
+        justify-content: flex-start;
+        padding: 0 20px;
+        border-bottom: 1px solid #286090;
+    }
+    nav a {
+        padding: 12px 18px;
+        border-right: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    nav a:last-child {
+        border-right: none;
+    }
+
+    /* Modyfikacja Main Content */
+    main {
+        padding: 30px;
+    }
+
+    /* Modyfikacja Aside (Panel boczny) */
+    aside {
+        padding: 30px;
+        border-top: none;
+        border-left: 1px solid #d0d0d0;
+    }
+
+    /* Style dla listy emoji (WIDE) - poprawione */
+    aside div {
+        display: grid; /* Używamy Grid, jak na referencji */
+        grid-template-columns: 1fr 1fr; /* Dwie kolumny */
+        gap: 20px; /* Odstępy */
+        margin-top: 1.5rem;
+        justify-items: center; /* Centruje elementy w komórkach siatki */
+    }
+    aside div span {
+        font-size: 4.5em; /* Jeszcze większy rozmiar czcionki dla wide */
+        width: 100px; /* Stała, większa szerokość */
+        height: 100px; /* Stała, większa wysokość */
+        background-color: rgba(255, 255, 255, 0.7);
+        border-radius: 15px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    }
+}
