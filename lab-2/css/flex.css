@@ -1,0 +1,132 @@
+/* ------- Style podstawowe ------- */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 1rem;
+}
+
+/* =================================================================== */
+/* =================== STYLE OGÓLNE (PANEL I ITEMY) ================== */
+/* =================================================================== */
+
+fieldset.theme-picker {
+  background-color: #faf3dd;
+  border: 3px solid #d98d30;
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex; /* Układa opcje w rzędzie */
+  gap: 1.5rem;  /* Dodaje odstęp między opcjami */
+}
+
+.container {
+  background-color: #faf3dd;
+  border: 3px solid #d98d30;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.item {
+  box-sizing: border-box; /* Kluczowe dla poprawnego liczenia szerokości */
+  color: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+/* ================== WARIANT NIEBIESKI (BLUE) ======================= */
+
+body:has(input[value="blue"]:checked) .item {
+  background-color: #0000ff;
+}
+body:has(input[value="blue"]:checked) .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+body:has(input[value="blue"]:checked) .item {
+  width: 80%;
+  max-width: 600px;
+}
+@media (min-width: 900px) {
+  body:has(input[value="blue"]:checked) .container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  body:has(input[value="blue"]:checked) .item { width: auto; }
+  body:has(input[value="blue"]:checked) .item:nth-child(4) { grid-column: 1 / 2; }
+  body:has(input[value="blue"]:checked) .item:nth-child(5) { grid-column: 3 / 4; }
+}
+
+/* =================== WARIANT CZERWONY (RED) ======================== */
+
+body:has(input[value="red"]:checked) .item {
+  background-color: #ff0000;
+}
+body:has(input[value="red"]:checked) .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+body:has(input[value="red"]:checked) .item:nth-child(1) {
+  grid-column: 1 / 3;
+  grid-row: 2 / 3;
+}
+@media (min-width: 900px) {
+  body:has(input[value="red"]:checked) .container {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+  }
+  body:has(input[value="red"]:checked) .item:nth-child(1) {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  body:has(input[value="red"]:checked) .item:nth-child(1) { order: 3; flex-grow: 2; }
+  body:has(input[value="red"]:checked) .item:nth-child(2) { order: 1; flex-grow: 1; }
+  body:has(input[value="red"]:checked) .item:nth-child(3) { order: 2; flex-grow: 1; }
+  body:has(input[value="red"]:checked) .item:nth-child(4) { order: 4; flex-grow: 1; }
+  body:has(input[value="red"]:checked) .item:nth-child(5) { order: 5; flex-grow: 1; }
+}
+
+/* =================================================================== */
+/* =================== WARIANT ZIELONY (GREEN) ======================= */
+/* =================================================================== */
+
+body:has(input[value="green"]:checked) .item {
+  background-color: #107c10;
+}
+body:has(input[value="green"]:checked) .container {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+}
+body:has(input[value="green"]:checked) .item:nth-child(1) { width: 100%; }
+body:has(input[value="green"]:checked) .item:nth-child(2) { width: 85%; }
+body:has(input[value="green"]:checked) .item:nth-child(3) { width: 70%; }
+body:has(input[value="green"]:checked) .item:nth-child(4) { width: 55%; }
+body:has(input[value="green"]:checked) .item:nth-child(5) { width: 40%; }
+body:has(input[value="green"]:checked) .item:nth-child(1) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+body:has(input[value="green"]:checked) .item:nth-child(1)::before,
+body:has(input[value="green"]:checked) .item:nth-child(1)::after {
+  content: '😋';
+  padding: 0 0.5rem;
+  font-size: 1.5rem;
+}
+@media (min-width: 900px) {
+  body:has(input[value="green"]:checked) .container {
+    flex-direction: row;
+    align-items: stretch;
+  }
+  body:has(input[value="green"]:checked) .item:nth-child(1) { flex-grow: 5; }
+  body:has(input[value="green"]:checked) .item:nth-child(2) { flex-grow: 4; }
+  body:has(input[value="green"]:checked) .item:nth-child(3) { flex-grow: 3; }
+  body:has(input[value="green"]:checked) .item:nth-child(4) { flex-grow: 2; }
+  body:has(input[value="green"]:checked) .item:nth-child(5) { flex-grow: 1; }
+}
