@@ -1,12 +1,84 @@
 <!DOCTYPE html>
 <html lang="pl">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Lab 3</title>
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
-  <body>
-    <h1>Lab 3</h1>
-    <a href="..">Powrót</a>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koszulka Polo - Sklep</title>
+    
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="css/polo.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <input type="radio" class="color-input" name="color-choice" id="color-b" checked>
+    <input type="radio" class="color-input" name="color-choice" id="color-r">
+    <input type="radio" class="color-input" name="color-choice" id="color-g">
+    <input type="radio" class="color-input" name="color-choice" id="color-y">
+
+    <input type="radio" class="size-input" name="size-choice" id="size-s">
+    <input type="radio" class="size-input" name="size-choice" id="size-m" checked> <input type="radio" class="size-input" name="size-choice" id="size-l">
+    <input type="radio" class="size-input" name="size-choice" id="size-xl">
+
+
+    <div class="product-wrapper">
+    
+        <article class="product-card">
+
+            <div class="product-image-container">
+                <div id="main-product-image"></div>
+            </div>
+
+            <div class="product-details">
+                
+                <header class="product-header">
+                    <h1>Koszulka Polo</h1>
+                    <span class="promo-badge">Promocja!</span>
+                </header>
+                <p class="product-description">
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos aspernatur soluta veniam.
+                </p>
+
+                <div class="product-options" id="color-selector">
+                    <h3 class="option-label">Kolor</h3>
+                    <ul class="option-list color-swatches">
+                        <li>
+                            <label for="color-b" class="swatch-btn" style="background-color: #1a71c4;"></label>
+                        </li>
+                        <li>
+                            <label for="color-r" class="swatch-btn" style="background-color: #b02a37;"></label>
+                        </li>
+                        <li>
+                            <label for="color-g" class="swatch-btn" style="background-color: #126a3c;"></label>
+                        </li>
+                        <li>
+                            <label for="color-y" class="swatch-btn" style="background-color: #cc9c00;"></label>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="product-options" id="size-selector">
+                    <h3 class="option-label">Rozmiar</h3>
+                    <ul class="option-list size-buttons">
+                        <li><label for="size-s" class="size-btn">S</label></li>
+                        <li><label for="size-m" class="size-btn">M</label></li>
+                        <li><label for="size-l" class="size-btn">L</label></li>
+                        <li><label for="size-xl" class="size-btn">XL</label></li>
+                    </ul>
+                </div>
+
+                <div class="product-price">
+                    59,99 zł
+                </div>
+                <button type="button" class="add-to-cart-btn">
+                    🛒 Do koszyka
+                </button>
+
+            </div>
+        </article>
+
+    </div></body>
 </html>

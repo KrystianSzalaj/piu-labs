@@ -17,3 +17,36 @@ a {
 a:hover {
   text-decoration: underline; /* podkreślenie przy najechaniu */
 }
+nav {
+  width: 100%;
+  background: linear-gradient(90deg, #00a86b, #2ecc71);
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 15px 0;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 0;
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+nav ul li a {
+    color: #f1f1f1;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease, transform 0.2s ease;
+    padding: 0.3rem 0.5rem;
+}
+nav ul li a:hover {
+  color: var(--link-color);
+  transform: scale(1.07);
+}
+nav ul li a.active {
+  color: var(--link-color);
+  border-bottom: 2px solid var(--link-color);
+}

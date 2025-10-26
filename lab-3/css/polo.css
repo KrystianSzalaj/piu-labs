@@ -1,0 +1,275 @@
+/* --- USTAWIENIA OGÓLNE --- */
+body {
+    font-family: 'Roboto', sans-serif;
+    /* Reset marginesu ze style.css - to jest poprawne */
+    margin: 0; 
+    padding: 20px; /* Zastępuje domyślny padding 1rem dla body */
+    background-color: #f0f2f5;
+    color: #333;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+/* Zachowujemy font-size i line-height z pliku bazowego style.css */
+
+/* --- KONTENER PRZECHOWUJĄCY STAN --- */
+.product-wrapper {
+    --theme-color: #1a71c4; 
+    --product-image: url('../photos/polo_b.png'); 
+    
+    width: 100%;
+    max-width: 840px; 
+}
+
+/* Ukrywamy pola radio */
+.color-input,
+.size-input { /* POPRAWKA: Dodano .size-input */
+    display: none;
+}
+
+/* --- KARTA PRODUKTU (Responysywna bez @media) --- */
+.product-card {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center; 
+    width: 100%;
+    background-color: #f0f2f5;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* --- LEWA KOLUMNA (ZDJĘCIE) --- */
+.product-image-container {
+    flex: 1 1 400px;
+    max-width: 500px; 
+    aspect-ratio: 1 / 1; 
+    padding: 20px;
+    box-sizing: border-box; 
+}
+
+#main-product-image {
+    width: 100%;
+    height: 100%;
+    background-image: var(--product-image);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 3px solid var(--theme-color); 
+    border-radius: 8px;
+}
+
+
+/* --- PRAWA KOLUMNA (DETALE) --- */
+.product-details {
+    flex: 1 1 300px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+/* --- NAGŁÓWEK PRODUKTU --- */
+.product-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    align-self: stretch;
+    width: 100%;
+}
+
+.product-header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.promo-badge {
+    background-color: var(--theme-color);
+    color: #ffffff;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* --- OPIS PRODUKTU --- */
+.product-description {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #666;
+    margin-bottom: 25px;
+    align-self: stretch;
+    width: 100%;
+}
+
+/* --- OPCJE (KOLOR I ROZMIAR) --- */
+.product-options {
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    width: 100%; 
+    max-width: 250px; 
+}
+
+.option-label {
+    font-size: 16px;
+    font-weight: 700; 
+    margin: 0 0 10px 0;
+    text-align: left; 
+}
+
+.option-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start; 
+}
+
+/* Próbki koloru (teraz jako LABELE) */
+.color-swatches .swatch-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid #444; 
+    background-color: inherit; 
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; 
+    overflow: hidden; 
+}
+
+/* Pseudoelement ::before (wewnętrzna kropka) */
+.color-swatches .swatch-btn::before {
+    content: '';
+    display: block;
+    width: 20px; 
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--theme-color); 
+    position: relative;
+    z-index: 2; 
+    transform: scale(0);
+    transition: transform 0.2s;
+}
+
+/* Pseudoelement ::after (białe tło dla aktywnego) */
+.color-swatches .swatch-btn::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff; 
+    border-radius: 50%;
+    z-index: 1; 
+    transform: scale(0);
+    transition: transform 0.2s;
+}
+
+/* Aktywny kolor - POKAZUJEMY pseudoelementy */
+#color-b:checked ~ .product-wrapper label[for="color-b"]::before,
+#color-r:checked ~ .product-wrapper label[for="color-r"]::before,
+#color-g:checked ~ .product-wrapper label[for="color-g"]::before,
+#color-y:checked ~ .product-wrapper label[for="color-y"]::before {
+    transform: scale(1);
+}
+
+#color-b:checked ~ .product-wrapper label[for="color-b"]::after,
+#color-r:checked ~ .product-wrapper label[for="color-r"]::after,
+#color-g:checked ~ .product-wrapper label[for="color-g"]::after,
+#color-y:checked ~ .product-wrapper label[for="color-y"]::after {
+    transform: scale(1);
+}
+
+
+/* Przyciski wyboru rozmiaru (teraz jako LABELE) */
+.size-buttons .size-btn {
+    padding: 8px 16px;
+    border: 2px solid #000; 
+    background-color: #f0f2f5;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer; /* POPRAWKA: Dodano cursor, bo to label */
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    /* Dodajemy, aby labelki wyglądały jak przyciski */
+    display: inline-block; 
+    text-align: center;
+}
+
+/* POPRAWKA: Zastąpiono .size-btn.selected nową regułą
+  dla dynamicznego zaznaczania rozmiaru
+*/
+#size-s:checked ~ .product-wrapper label[for="size-s"],
+#size-m:checked ~ .product-wrapper label[for="size-m"],
+#size-l:checked ~ .product-wrapper label[for="size-l"],
+#size-xl:checked ~ .product-wrapper label[for="size-xl"] {
+    background-color: var(--theme-color);
+    color: #ffffff;
+    border-color: #000; 
+}
+
+/* --- CENA --- */
+.product-price {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #111;
+    text-align: center; 
+}
+
+/* --- PRZYCISK DO KOSZYKA --- */
+.add-to-cart-btn {
+    width: 100%; 
+    max-width: 160px; 
+    padding: 15px;
+    background-color: var(--theme-color);
+    color: #ffffff;
+    border: 2px solid #000;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    box-sizing: border-box; 
+}
+
+.add-to-cart-btn:hover {
+    filter: brightness(90%);
+}
+
+
+/* ======================================================
+  ===        DYNAMICZNA ZMIANA ZMIENNYCH CSS         ===
+  ======================================================
+*/
+
+/* --- 1. Zmiana globalnych zmiennych --- */
+#color-r:checked ~ .product-wrapper {
+    --theme-color: #b02a37; 
+    --product-image: url('../photos/polo_r.png');
+}
+
+#color-g:checked ~ .product-wrapper {
+    --theme-color: #126a3c; 
+    --product-image: url('../photos/polo_g.png');
+}
+
+#color-y:checked ~ .product-wrapper {
+    --theme-color: #cc9c00; 
+    --product-image: url('../photos/polo_y.png');
+}
