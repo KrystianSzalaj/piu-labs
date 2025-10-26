@@ -59,6 +59,7 @@ body {
     background-position: center;
     border: 3px solid var(--theme-color); 
     border-radius: 8px;
+    transition: border-color 0.3s ease;
 }
 
 
@@ -95,6 +96,7 @@ body {
     border-radius: 6px;
     font-size: 14px;
     font-weight: 500;
+    transition: background-color 0.3s ease;
 }
 
 /* --- OPIS PRODUKTU --- */
@@ -201,7 +203,7 @@ body {
     font-size: 14px;
     font-weight: 700;
     cursor: pointer; /* POPRAWKA: Dodano cursor, bo to label */
-    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease-out, filter 0.2s ease;
     /* Dodajemy, aby labelki wyglądały jak przyciski */
     display: inline-block; 
     text-align: center;
@@ -216,7 +218,8 @@ body {
 #size-xl:checked ~ .product-wrapper label[for="size-xl"] {
     background-color: var(--theme-color);
     color: #ffffff;
-    border-color: #000; 
+    border-color: #000;
+    transform: translateY(-3px) scale(1.05); 
 }
 
 /* --- CENA --- */
@@ -240,7 +243,7 @@ body {
     font-size: 16px;
     font-weight: 700;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.3s ease, filter 0.2s ease;
     display: flex;
     justify-content: center;
     align-items: center;
