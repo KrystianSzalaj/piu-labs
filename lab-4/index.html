@@ -1,12 +1,679 @@
 <!DOCTYPE html>
 <html lang="pl">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Lab 4</title>
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
-  <body>
-    <h1>Lab 4</h1>
-    <a href="..">Powrót</a>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablica Kanban</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- Globalne zmienne CSS (kolory, czcionki, cienie) --- */
+        :root {
+            /* Kolory */
+            --color-primary: #4F46E5; /* Główny kolor akcentu */
+            --color-text-dark: #1F2937;
+            --color-text-light: #4B5563;
+            --color-bg-page: #F3F4F6; /* Delikatne tło strony */
+            --color-bg-column: #E5E7EB; /* Tło kolumn */
+            --color-bg-card: #FFFFFF; /* Tło kart */
+            --color-border: #D1D5DB;
+            --color-hover: #E0E7FF; /* Delikatny hover dla przycisków */
+            --color-delete: #EF4444; /* Czerwień dla usuwania */
+            --color-move: #3B82F6; /* Niebieski dla ruchu */
+            --color-colorpicker: #F59E0B; /* Pomarańczowy dla kolorowania */
+
+            /* Czcionki */
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Open Sans', sans-serif;
+
+            /* Cienie */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* --- Ustawienia bazowe --- */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-bg-page);
+            margin: 0;
+            padding: 2rem; /* Większy padding strony */
+            color: var(--color-text-dark);
+            line-height: 1.6;
+            display: flex; /* Używamy flexbox dla centrowania boarda */
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- Nagłówek aplikacji --- */
+        .app-header {
+            text-align: center;
+            margin-bottom: 2.5rem; /* Większy odstęp */
+        }
+
+        .app-header h1 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem; /* Większy nagłówek */
+            color: var(--color-primary);
+            margin: 0;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+
+        /* --- Główny kontener tablicy Kanban --- */
+        .kanban-board {
+            display: flex;
+            justify-content: center; /* Centrowanie kolumn */
+            gap: 1.5rem; /* Odstęp między kolumnami */
+            flex-wrap: nowrap; /* Zapobiega zawijaniu kolumn */
+            overflow-x: auto; /* Pozwala na przewijanie poziome */
+            padding: 1rem; /* Padding dla scrollbara i estetyki */
+            align-items: flex-start; /* Kolumny zaczynają się od góry */
+            flex-grow: 1; /* Pozwala na rozciągnięcie wertykalne */
+        }
+
+        /* --- Styl kolumny --- */
+        .kanban-column {
+            flex-shrink: 0; /* Zapobiega kurczeniu się kolumn */
+            width: 320px; /* Stała, nieco szersza kolumna */
+            background-color: var(--color-bg-column);
+            border-radius: 10px; /* Większe zaokrąglenia */
+            padding: 1rem;
+            box-shadow: var(--shadow-md); /* Wyraźniejszy cień */
+            display: flex;
+            flex-direction: column;
+            /* Ograniczamy wysokość kolumny i pozwalamy na scroll kart */
+            max-height: calc(100vh - 12rem); 
+        }
+
+        /* Nagłówek kolumny */
+        .column-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--color-border); /* Delikatna linia */
+        }
+
+        .column-title-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .column-title {
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--color-text-dark);
+        }
+
+        /* Licznik kart */
+        .card-counter {
+            background-color: var(--color-border);
+            color: var(--color-text-light);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px; /* Całkowicie okrągły */
+        }
+
+        /* Przyciski akcji kolumny (koloruj, sortuj) */
+        .column-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Kontener na karty */
+        .cards-container {
+            flex-grow: 1; /* Pozwala kontenerowi na wypełnienie dostępnej przestrzeni */
+            overflow-y: auto; /* Pozwala na przewijanie kart w kolumnie */
+            padding-right: 0.5rem; /* Dla lepszego wyglądu scrollbara */
+            min-height: 50px; /* Minimalna wysokość nawet dla pustej kolumny */
+            padding-bottom: 0.5rem;
+        }
+
+        /* Dostosowanie scrollbara */
+        .cards-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        .cards-container::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05); /* Lżejsze tło */
+            border-radius: 10px;
+        }
+        .cards-container::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+        .cards-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+
+        /* Przycisk dodawania karty */
+        .add-card-btn {
+            width: 100%;
+            padding: 0.75rem;
+            margin-top: 1rem;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.5); /* Półprzezroczysty */
+            color: var(--color-text-light);
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .add-card-btn:hover {
+            background-color: var(--color-hover);
+            color: var(--color-primary);
+        }
+
+        /* --- Styl pojedynczej karty --- */
+        .kanban-card {
+            background-color: var(--color-bg-card);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            box-shadow: var(--shadow-sm);
+            cursor: grab;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 0.75rem;
+            transition: transform 0.15s ease-out, box-shadow 0.15s ease-out, background-color 0.3s ease;
+        }
+
+        .kanban-card:hover {
+            box-shadow: var(--shadow-md); /* Lekko podnieś kartę przy najechaniu */
+            transform: translateY(-2px);
+        }
+
+        .card-content { flex-grow: 1; }
+
+        .card-title {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin: 0 0 0.4rem 0;
+            color: var(--color-text-dark);
+        }
+
+        .card-description {
+            font-size: 0.8rem;
+            margin: 0;
+            color: var(--color-text-light);
+            white-space: pre-wrap;
+        }
+
+        .card-title[contenteditable="true"]:focus,
+        .card-description[contenteditable="true"]:focus {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+            background-color: #fcfdff;
+            border-radius: 4px;
+            padding: 2px 4px; /* Dodatkowy padding dla lepszej edycji */
+            margin: -2px -4px; /* Kompensacja paddingu */
+        }
+        .card-title[contenteditable="true"],
+        .card-description[contenteditable="true"] {
+            min-height: 1.1em; /* Utrzymuje widoczną wysokość nawet pustego pola */
+        }
+
+
+        /* --- Kontrolki na karcie (przyciski) --- */
+        .card-controls {
+            display: flex;
+            flex-direction: column; /* Przyciski w kolumnie */
+            gap: 0.2rem;
+            /* Domyślnie ukryte, pojawią się przy hover na karcie */
+            opacity: 0;
+            transition: opacity 0.2s ease-in-out;
+        }
+        
+        .kanban-card:hover .card-controls {
+            opacity: 1; /* Pokaż przyciski na hover karty */
+        }
+
+
+        /* Ogólny styl dla wszystkich przycisków ikon */
+        .icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            width: 28px; /* Stała szerokość */
+            height: 28px; /* Stała wysokość */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: background-color 0.2s, color 0.2s;
+            color: var(--color-text-light);
+        }
+
+        /* Przyciski ikon w nagłówku kolumny */
+        .column-actions .icon-btn {
+            font-size: 1.2rem;
+            width: 32px;
+            height: 32px;
+            color: var(--color-text-light);
+        }
+        .column-actions .icon-btn:hover {
+            background-color: rgba(0, 0, 0, 0.08);
+            color: var(--color-text-dark);
+        }
+
+        /* Kolory hover dla przycisków na karcie */
+        .icon-btn[data-action="move-left"]:hover,
+        .icon-btn[data-action="move-right"]:hover {
+            color: var(--color-move);
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        .icon-btn[data-action="delete"]:hover {
+            color: var(--color-delete);
+            background-color: rgba(239, 68, 68, 0.1);
+        }
+
+        .icon-btn[data-action="color"]:hover {
+            color: var(--color-colorpicker);
+            background-color: rgba(245, 158, 11, 0.1);
+        }
+
+        /* Ukrywanie przycisków ruchu w skrajnych kolumnach */
+        #todo-column .icon-btn[data-action="move-left"] { display: none; }
+        #done-column .icon-btn[data-action="move-right"] { display: none; }
+
+        /* --- Drag & Drop Style --- */
+        .kanban-card.dragging {
+            opacity: 0.6;
+            transform: rotate(2deg) translateY(-5px); /* Subtelniejsza transformacja */
+            box-shadow: var(--shadow-lg);
+            cursor: grabbing;
+        }
+
+        .cards-container.drag-over {
+            background-color: rgba(79, 70, 229, 0.08); /* Lekkie podświetlenie kolumny */
+            border-radius: 8px;
+        }
+
+        /* Media Queries dla mniejszych ekranów */
+        @media (max-width: 1100px) {
+            .kanban-board {
+                justify-content: flex-start; /* Przykleja kolumny do lewej */
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            .app-header h1 {
+                font-size: 2rem;
+            }
+            .kanban-column {
+                width: 280px; /* Nieco węższe kolumny */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="app-header">
+        <h1>Tablica Projektowa</h1>
+    </header>
+
+    <div class="kanban-board">
+
+        <div class="kanban-column" id="todo-column">
+            <div class="column-header">
+                <div class="column-title-group">
+                    <span class="column-title">Do zrobienia</span>
+                    <span class="card-counter" data-column-id="todo">0</span>
+                </div>
+                <div class="column-actions">
+                    <button class="color-column-btn icon-btn" data-column-id="todo" title="Pokoloruj wszystkie karty w kolumnie">🎨</button>
+                    <button class="sort-column-btn icon-btn" data-column-id="todo" title="Sortuj karty alfabetycznie">🔠</button>
+                </div>
+            </div>
+            <div class="cards-container" data-column-id="todo">
+                </div>
+            <button class="add-card-btn" data-column-id="todo">➕ Dodaj kartę</button>
+        </div>
+
+        <div class="kanban-column" id="inprogress-column">
+            <div class="column-header">
+                <div class="column-title-group">
+                    <span class="column-title">W trakcie</span>
+                    <span class="card-counter" data-column-id="inprogress">0</span>
+                </div>
+                <div class="column-actions">
+                    <button class="color-column-btn icon-btn" data-column-id="inprogress" title="Pokoloruj wszystkie karty w kolumnie">🎨</button>
+                    <button class="sort-column-btn icon-btn" data-column-id="inprogress" title="Sortuj karty alfabetycznie">🔠</button>
+                </div>
+            </div>
+            <div class="cards-container" data-column-id="inprogress">
+                </div>
+            <button class="add-card-btn" data-column-id="inprogress">➕ Dodaj kartę</button>
+        </div>
+
+        <div class="kanban-column" id="done-column">
+            <div class="column-header">
+                <div class="column-title-group">
+                    <span class="column-title">Zrobione</span>
+                    <span class="card-counter" data-column-id="done">0</span>
+                </div>
+                <div class="column-actions">
+                    <button class="color-column-btn icon-btn" data-column-id="done" title="Pokoloruj wszystkie karty w kolumnie">🎨</button>
+                    <button class="sort-column-btn icon-btn" data-column-id="done" title="Sortuj karty alfabetycznie">🔠</button>
+                </div>
+            </div>
+            <div class="cards-container" data-column-id="done">
+                </div>
+            <button class="add-card-btn" data-column-id="done">➕ Dodaj kartę</button>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- 1. Selektory ---
+            const addCardButtons = document.querySelectorAll('.add-card-btn');
+            const cardsContainers = document.querySelectorAll('.cards-container');
+            const kanbanBoard = document.querySelector('.kanban-board');
+            const colorColumnButtons = document.querySelectorAll('.color-column-btn');
+            const sortColumnButtons = document.querySelectorAll('.sort-column-btn');
+            const cardCounters = document.querySelectorAll('.card-counter');
+
+            // --- 2. Ładowanie danych z localStorage ---
+            loadData();
+
+            // --- 3. Listenery dla przycisków "Dodaj kartę" ---
+            addCardButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const columnId = button.dataset.columnId;
+                    const cardTitle = prompt('Wprowadź tytuł nowej karty:');
+                    if (cardTitle && cardTitle.trim() !== '') {
+                        addNewCard(columnId, cardTitle.trim());
+                    }
+                });
+            });
+
+            // --- 4. Listenery dla przycisków "Koloruj kolumnę" ---
+            colorColumnButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const columnId = button.dataset.columnId;
+                    const container = document.querySelector(`.cards-container[data-column-id="${columnId}"]`);
+                    const cards = container.querySelectorAll('.kanban-card');
+                    cards.forEach(card => {
+                        card.style.backgroundColor = getRandomColor();
+                    });
+                    saveData();
+                });
+            });
+
+            // --- 5. Listenery dla przycisków "Sortuj kolumnę" ---
+            sortColumnButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const columnId = button.dataset.columnId;
+                    const container = document.querySelector(`.cards-container[data-column-id="${columnId}"]`);
+                    const cards = Array.from(container.querySelectorAll('.kanban-card'));
+
+                    cards.sort((a, b) => {
+                        const titleA = a.querySelector('.card-title').textContent.toLowerCase();
+                        const titleB = b.querySelector('.card-title').textContent.toLowerCase();
+                        return titleA.localeCompare(titleB);
+                    });
+
+                    cards.forEach(card => {
+                        container.appendChild(card);
+                    });
+                    saveData();
+                });
+            });
+
+            // --- 6. Listenery dla kontenerów (Drag & Drop) ---
+            cardsContainers.forEach(container => {
+                container.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    container.classList.add('drag-over');
+                });
+                container.addEventListener('dragleave', () => {
+                    container.classList.remove('drag-over');
+                });
+                container.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    container.classList.remove('drag-over');
+                    const cardId = e.dataTransfer.getData('text/plain');
+                    const draggedCard = document.getElementById(cardId);
+                    if (draggedCard) {
+                        container.appendChild(draggedCard);
+                        saveData();
+                        updateCardCounters();
+                    }
+                });
+            });
+
+            // --- 7. Centralny Event Listener (Delegacja zdarzeń) ---
+            kanbanBoard.addEventListener('click', (e) => {
+                const button = e.target.closest('button[data-action]');
+                if (!button) return;
+                const action = button.dataset.action;
+                const card = button.closest('.kanban-card');
+                if (!card) return;
+
+                switch (action) {
+                    case 'move-left': {
+                        const prevColumn = card.closest('.kanban-column').previousElementSibling;
+                        if (prevColumn && prevColumn.classList.contains('kanban-column')) {
+                            prevColumn.querySelector('.cards-container').appendChild(card);
+                            saveData();
+                            updateCardCounters();
+                        }
+                        break;
+                    }
+                    case 'move-right': {
+                        const nextColumn = card.closest('.kanban-column').nextElementSibling;
+                        if (nextColumn && nextColumn.classList.contains('kanban-column')) {
+                            nextColumn.querySelector('.cards-container').appendChild(card);
+                            saveData();
+                            updateCardCounters();
+                        }
+                        break;
+                    }
+                    case 'delete': {
+                        if (confirm('Czy na pewno chcesz usunąć tę kartę?')) {
+                            card.remove();
+                            saveData();
+                            updateCardCounters();
+                        }
+                        break;
+                    }
+                    case 'color': {
+                        card.style.backgroundColor = getRandomColor();
+                        saveData();
+                        break;
+                    }
+                }
+            });
+
+            // --- 8. Funkcja: Generowanie losowego koloru ---
+            function getRandomColor() {
+                const hue = Math.floor(Math.random() * 360);
+                // Utrzymujemy jasność (90%) i nasycenie (75%), aby kolory były pastelowe i czytelne
+                return `hsl(${hue}, 75%, 90%)`;
+            }
+            
+            // --- 9. Funkcja aktualizująca liczniki kart ---
+            function updateCardCounters() {
+                cardCounters.forEach(counter => {
+                    const columnId = counter.dataset.columnId;
+                    const container = document.querySelector(`.cards-container[data-column-id="${columnId}"]`);
+                    const count = container.querySelectorAll('.kanban-card').length;
+                    counter.textContent = count;
+                });
+            }
+
+            // --- 10. Funkcja: Dodawanie nowej karty ---
+            function addNewCard(columnId, title) {
+                const cardData = {
+                    id: `card-${Date.now()}`,
+                    title: title,
+                    description: 'Kliknij, aby edytować opis...',
+                    color: getRandomColor()
+                };
+                const cardElement = createCardElement(cardData);
+                document.querySelector(`.cards-container[data-column-id="${columnId}"]`).appendChild(cardElement);
+                saveData();
+                updateCardCounters();
+            }
+
+            // --- 11. Funkcja: Tworzenie elementu karty (ZAKTUALIZOWANA) ---
+            function createCardElement(cardData) {
+                const card = document.createElement('div');
+                card.classList.add('kanban-card');
+                card.setAttribute('draggable', 'true');
+                card.id = cardData.id;
+                card.style.backgroundColor = cardData.color;
+
+                const cardContentWrapper = document.createElement('div');
+                cardContentWrapper.classList.add('card-content');
+
+                const cardTitle = document.createElement('h4');
+                cardTitle.classList.add('card-title');
+                cardTitle.textContent = cardData.title;
+                cardTitle.setAttribute('contenteditable', 'true');
+
+                const cardDescription = document.createElement('p');
+                cardDescription.classList.add('card-description');
+                cardDescription.textContent = cardData.description;
+                cardDescription.setAttribute('contenteditable', 'true');
+
+                const cardControls = document.createElement('div');
+                cardControls.classList.add('card-controls');
+
+                // Tworzenie przycisków jako 'icon-btn'
+                const moveLeftBtn = document.createElement('button');
+                moveLeftBtn.classList.add('icon-btn');
+                moveLeftBtn.innerHTML = '←';
+                moveLeftBtn.dataset.action = 'move-left';
+                moveLeftBtn.title = 'Przenieś w lewo';
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.classList.add('icon-btn');
+                deleteBtn.innerHTML = '&times;'; // Używamy 'x' zamiast ikony dla prostoty
+                deleteBtn.dataset.action = 'delete';
+                deleteBtn.title = 'Usuń kartę';
+
+                const colorBtn = document.createElement('button');
+                colorBtn.classList.add('icon-btn');
+                colorBtn.innerHTML = '🎨';
+                colorBtn.dataset.action = 'color';
+                colorBtn.title = 'Zmień kolor karty';
+
+                const moveRightBtn = document.createElement('button');
+                moveRightBtn.classList.add('icon-btn');
+                moveRightBtn.innerHTML = '→';
+                moveRightBtn.dataset.action = 'move-right';
+                moveRightBtn.title = 'Przenieś w prawo';
+
+                // Składanie karty
+                cardContentWrapper.appendChild(cardTitle);
+                cardContentWrapper.appendChild(cardDescription);
+
+                // Zmieniona kolejność przycisków na bardziej logiczną
+                cardControls.appendChild(moveLeftBtn);
+                cardControls.appendChild(colorBtn);
+                cardControls.appendChild(deleteBtn);
+                cardControls.appendChild(moveRightBtn);
+                
+                card.appendChild(cardContentWrapper);
+                card.appendChild(cardControls);
+
+                // Listenery Drag & Drop
+                card.addEventListener('dragstart', (e) => {
+                    card.classList.add('dragging');
+                    e.dataTransfer.setData('text/plain', card.id);
+                });
+                card.addEventListener('dragend', () => {
+                    card.classList.remove('dragging');
+                });
+
+                // Listenery edycji
+                [cardTitle, cardDescription].forEach(element => {
+                    element.addEventListener('blur', () => {
+                        if (document.getElementById(card.id)) saveData();
+                    });
+                    element.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            element.blur();
+                        }
+                    });
+                });
+
+                return card;
+            }
+
+            // --- 12. Funkcje localStorage (Zapis i Odczyt) ---
+            function saveData() {
+                const boardState = {
+                    todo: [],
+                    inprogress: [],
+                    done: []
+                };
+                cardsContainers.forEach(container => {
+                    const columnId = container.dataset.columnId;
+                    const cards = container.querySelectorAll('.kanban-card');
+                    cards.forEach(card => {
+                        boardState[columnId].push({
+                            id: card.id,
+                            title: card.querySelector('.card-title').textContent,
+                            description: card.querySelector('.card-description').textContent,
+                            color: card.style.backgroundColor
+                        });
+                    });
+                });
+                localStorage.setItem('kanbanBoard', JSON.stringify(boardState));
+            }
+
+            function loadData() {
+                const savedState = localStorage.getItem('kanbanBoard');
+                if (!savedState) {
+                    updateCardCounters(); // Ustaw liczniki na 0, jeśli nic nie ma
+                    return;
+                }
+                
+                const boardState = JSON.parse(savedState);
+
+                for (const columnId in boardState) {
+                    const columnContainer = document.querySelector(`.cards-container[data-column-id="${columnId}"]`);
+                    if (columnContainer) {
+                        columnContainer.innerHTML = '';
+                        boardState[columnId].forEach(cardData => {
+                            const cardElement = createCardElement(cardData);
+                            columnContainer.appendChild(cardElement);
+                        });
+                    }
+                }
+                updateCardCounters(); // Zaktualizuj liczniki po wczytaniu
+            }
+
+        });
+    </script>
+
+</body>
 </html>
