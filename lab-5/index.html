@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 5 - Kształty ES6</title>
+    <style>
+        :root {
+            --bg-color: #f4f4f9;
+            --text-color: #333;
+            --panel-bg: #fff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 { margin-bottom: 10px; }
+
+        .controls {
+            background: var(--panel-bg);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.1s, opacity 0.2s;
+        }
+        button:active { transform: scale(0.95); }
+        button:hover { opacity: 0.9; }
+
+        .btn-add-square { background-color: #3498db; color: white; }
+        .btn-add-circle { background-color: #e74c3c; color: white; }
+        .btn-recolor-squares { background-color: #2980b9; color: white; border: 2px solid #3498db; }
+        .btn-recolor-circles { background-color: #c0392b; color: white; border: 2px solid #e74c3c; }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        .stats span {
+            background: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        #shapes-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            width: 100%;
+            max-width: 800px;
+            min-height: 200px;
+        }
+
+        .shape {
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: transform 0.2s ease-out;
+            position: relative;
+        }
+
+        .shape:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .shape.square { border-radius: 4px; }
+        .shape.circle { border-radius: 50%; }
+
+    </style>
+</head>
+<body>
+
+    <h1>Kreator Kształtów</h1>
+
+    <div class="controls">
+        <button id="add-square" class="btn-add-square">+ Kwadrat</button>
+        <button id="add-circle" class="btn-add-circle">+ Koło</button>
+        <div style="width: 100%; height: 0; flex-basis: 100%;"></div> <button id="recolor-squares" class="btn-recolor-squares">Przekoloruj Kwadraty</button>
+        <button id="recolor-circles" class="btn-recolor-circles">Przekoloruj Koła</button>
+    </div>
+
+    <div class="stats">
+        <span>Kwadraty: <strong id="count-squares">0</strong></span>
+        <span>Koła: <strong id="count-circles">0</strong></span>
+    </div>
+
+    <div id="shapes-container">
+        </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
