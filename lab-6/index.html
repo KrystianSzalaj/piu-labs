@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax Demo Lab-6</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 20px auto; padding: 0 15px; }
+        
+        .controls { display: flex; gap: 10px; margin-bottom: 20px; }
+        button { padding: 10px 15px; cursor: pointer; border: none; border-radius: 4px; color: white; font-size: 14px; }
+        #btn-load { background-color: #28a745; }
+        #btn-error { background-color: #dc3545; }
+        #btn-reset { background-color: #6c757d; }
+        button:hover { opacity: 0.9; }
+
+        #loader { display: none; font-weight: bold; color: #007bff; margin-bottom: 10px; }
+        
+        #error-msg { 
+            display: none; 
+            background: #f8d7da; 
+            color: #721c24; 
+            padding: 10px; 
+            border: 1px solid #f5c6cb; 
+            border-radius: 4px; 
+            margin-bottom: 20px;
+        }
+
+        ul { list-style-type: none; padding: 0; }
+        li { background: #f8f9fa; border: 1px solid #ddd; margin-bottom: 5px; padding: 10px; border-radius: 4px; }
+        li strong { display: block; color: #333; }
+        li span { color: #666; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+
+    <h1>Demo Biblioteki Ajax</h1>
+
+    <div class="controls">
+        <button id="btn-load">Pobierz dane</button>
+        <button id="btn-error">Wywołaj błąd</button>
+        <button id="btn-reset">Resetuj widok</button>
+    </div>
+
+    <div id="loader">Pobieranie danych...</div>
+
+    <div id="error-msg"></div>
+
+    <ul id="data-list"></ul>
+
+    <script src="ajax.js"></script>
+    
+    <script>
+        const api = new Ajax({
+            baseURL: 'https://jsonplaceholder.typicode.com',
+            timeout: 3000
+        });
+
+        const btnLoad = document.getElementById('btn-load');
+        const btnError = document.getElementById('btn-error');
+        const btnReset = document.getElementById('btn-reset');
+        const loader = document.getElementById('loader');
+        const errorMsg = document.getElementById('error-msg');
+        const list = document.getElementById('data-list');
+
+        const showLoader = (show) => loader.style.display = show ? 'block' : 'none';
+        
+        const showError = (message) => {
+            errorMsg.innerText = message;
+            errorMsg.style.display = 'block';
+        };
+        
+        const clearView = () => {
+            list.innerHTML = '';
+            errorMsg.style.display = 'none';
+            errorMsg.innerText = '';
+        };
+
+        
+        btnLoad.addEventListener('click', async () => {
+            clearView();
+            showLoader(true);
+
+            try {
+                const users = await api.get('/users?_limit=5');
+                
+                users.forEach(user => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<strong>${user.name}</strong> <span>${user.email}</span>`;
+                    list.appendChild(li);
+                });
+            } catch (err) {
+                showError('Błąd pobierania: ' + err.message);
+            } finally {
+                showLoader(false);
+            }
+        });
+
+        btnError.addEventListener('click', async () => {
+            clearView();
+            showLoader(true);
+
+            try {
+                await api.get('/nie-istnieje', { timeout: 2000 });
+            } catch (err) {
+                showError('Wystąpił oczekiwany błąd: ' + err.message);
+            } finally {
+                showLoader(false);
+            }
+        });
+
+        btnReset.addEventListener('click', () => {
+            clearView();
+            showLoader(false);
+        });
+
+    </script>
+</body>
+</html>
