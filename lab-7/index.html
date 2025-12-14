@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab-7: Sklep Odzieżowy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Lab-7: Nowa Kolekcja</h1>
+    </header>
+
+    <main class="products-grid">
+
+        <product-card>
+            <img slot="image" src="https://placehold.co/400x500/png?text=Kurtka+Zimowa" alt="Kurtka">
+            <span slot="promo" class="badge-sale">-20%</span>
+            <h3 slot="name">Kurtka Puchowa Arctic</h3>
+            <span slot="price">299.99 PLN</span>
+            
+            <div slot="colors" class="color-options">
+                <span style="background: navy;" title="Granatowy"></span>
+                <span style="background: black;" title="Czarny"></span>
+            </div>
+            <div slot="sizes" class="size-options">
+                <span>M</span><span>L</span><span>XL</span>
+            </div>
+        </product-card>
+
+        <product-card>
+            <img slot="image" src="https://placehold.co/400x500/EFEFEF/333?text=Jeansy+Slim" alt="Jeansy">
+            <h3 slot="name">Jeansy Slim Fit</h3>
+            <span slot="price">149.00 PLN</span>
+            
+            <div slot="colors" class="color-options">
+                <span style="background: #3b82f6;" title="Jasny Jeans"></span>
+                <span style="background: #1e3a8a;" title="Ciemny Jeans"></span>
+            </div>
+            <div slot="sizes" class="size-options">
+                <span>30</span><span>32</span><span>34</span>
+            </div>
+        </product-card>
+
+        <product-card>
+            <img slot="image" src="https://placehold.co/400x500/red/white?text=Czapka" alt="Czapka">
+            <h3 slot="name">Czapka Wełniana</h3>
+            <span slot="price">49.99 PLN</span>
+            <span slot="promo" class="badge-new">NEW</span>
+        </product-card>
+
+        <product-card>
+            <img slot="image" src="https://placehold.co/400x500/white/black?text=T-Shirt+Basic" alt="T-Shirt">
+            <h3 slot="name">T-Shirt Basic White</h3>
+            <span slot="price">39.99 PLN</span>
+            <div slot="sizes" class="size-options">
+                <span>S</span><span>M</span><span>L</span><span>XL</span>
+            </div>
+        </product-card>
+
+        <product-card>
+            <img slot="image" src="https://placehold.co/400x500/orange/white?text=Sukienka+Letnia" alt="Sukienka">
+            <span slot="promo" class="badge-sale">-50%</span>
+            <h3 slot="name">Sukienka Floral</h3>
+            <span slot="price"><s style="color:#999; font-size:0.8em">199.00</s> 99.50 PLN</span>
+            <div slot="colors" class="color-options">
+                <span style="background: orange;" title="Pomarańczowy"></span>
+            </div>
+            <div slot="sizes" class="size-options">
+                <span>36</span><span>38</span><span>40</span>
+            </div>
+        </product-card>
+
+        <product-card>
+            <img slot="image" src="https://placehold.co/400x500/333/white?text=Sneakersy" alt="Buty">
+            <h3 slot="name">Sneakersy Urban</h3>
+            <span slot="price">229.00 PLN</span>
+            <div slot="sizes" class="size-options">
+                <span>40</span><span>41</span><span>42</span><span>43</span>
+            </div>
+        </product-card>
+
+    </main>
+
+    <script src="component.js"></script>
+</body>
+</html>

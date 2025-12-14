@@ -1,0 +1,82 @@
+body {
+    background-color: #f9fafb;
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 2rem;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #111;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+.badge-sale {
+    background-color: #ef4444;
+    color: white;
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.badge-new {
+    background-color: #3b82f6;
+    color: white;
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.color-options {
+    display: flex;
+    gap: 8px;
+}
+
+.color-options span {
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.color-options span:hover {
+    transform: scale(1.2);
+    border-color: #999;
+}
+
+.size-options {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.size-options span {
+    font-size: 0.8rem;
+    border: 1px solid #ddd;
+    padding: 2px 6px;
+    color: #666;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.size-options span:hover {
+    background-color: #111;
+    color: #fff;
+    border-color: #111;
+}
