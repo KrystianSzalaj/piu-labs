@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "name": "Kurtka Puchowa Arctic",
+    "price": 299.99,
+    "image": "https://placehold.co/400x500/png?text=Kurtka",
+    "promo": "-20%",
+    "colors": ["navy", "black"],
+    "sizes": ["M", "L", "XL"]
+  },
+  {
+    "id": 2,
+    "name": "Jeansy Slim Fit",
+    "price": 149.00,
+    "image": "https://placehold.co/400x500/EFEFEF/333?text=Jeansy",
+    "colors": ["#3b82f6", "#1e3a8a"],
+    "sizes": ["30", "32", "34"]
+  },
+  {
+    "id": 3,
+    "name": "Czapka Wełniana",
+    "price": 49.99,
+    "image": "https://placehold.co/400x500/red/white?text=Czapka",
+    "promo": "NEW"
+  },
+  {
+    "id": 4,
+    "name": "T-Shirt Basic",
+    "price": 39.99,
+    "image": "https://placehold.co/400x500/white/black?text=T-Shirt",
+    "sizes": ["S", "M", "L", "XL"]
+  },
+  {
+    "id": 5,
+    "name": "Sneakersy Urban",
+    "price": 229.00,
+    "image": "https://placehold.co/400x500/333/white?text=Sneakersy",
+    "sizes": ["40", "41", "42"]
+  },
+  {
+    "id": 6,
+    "name": "Plecak Miejski",
+    "price": 89.00,
+    "image": "https://placehold.co/400x500/green/white?text=Plecak"
+  }
+]
